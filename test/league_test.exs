@@ -1,6 +1,6 @@
-alias Plugger.Web.Router
+alias League.Web.Router
 
-defmodule PluggerTest do
+defmodule LeagueTest do
   @moduledoc false
   use ExUnit.Case
   use Plug.Test
@@ -8,7 +8,7 @@ defmodule PluggerTest do
   @opts Router.init([])
 
   test "greets the world" do
-    assert Plugger.hello() == :world
+    assert League.hello() == :world
   end
 
   test "returns hello world" do
@@ -52,6 +52,6 @@ defmodule PluggerTest do
   end
 
   test "start code does not crash" do
-    {:error, {:already_started, _pid}} = Plugger.Application.start(:normal, [])
+    {:error, {:already_started, _pid}} = League.Application.start(:normal, [])
   end
 end

@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :plugger, key: :value
+#     config :league, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:plugger, :key)
+#     Application.get_env(:league, :key)
 #
 # You can also configure a 3rd-party app:
 #

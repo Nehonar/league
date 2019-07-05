@@ -1,9 +1,9 @@
-defmodule Plugger.Web.Router do
+defmodule League.Web.Router do
   use Plug.Router
 
   plug(:match)
-  plug Plugger.Web.MetricsInstrumenter
-  plug Plugger.Web.MetricsExporter
+  plug League.Web.MetricsInstrumenter
+  plug League.Web.MetricsExporter
   plug(:dispatch)
 
   get "/hello" do

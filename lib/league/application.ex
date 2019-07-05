@@ -1,7 +1,7 @@
-alias Plugger.Web.{MetricsExporter, MetricsInstrumenter, Router}
+alias League.Web.{MetricsExporter, MetricsInstrumenter, Router}
 alias Plug.Cowboy
 
-defmodule Plugger.Application do
+defmodule League.Application do
   @moduledoc false
 
   use Application
@@ -18,7 +18,7 @@ defmodule Plugger.Application do
       )
     ]
 
-    opts = [strategy: :one_for_one, name: Plugger.Supervisor]
+    opts = [strategy: :one_for_one, name: League.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

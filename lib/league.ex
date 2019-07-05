@@ -1,6 +1,6 @@
-defmodule Plugger do
+defmodule League do
   @moduledoc """
-  Documentation for Plugger.
+  Documentation for League.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Plugger do
 
   ## Examples
 
-      iex> Plugger.hello()
+      iex> League.hello()
       :world
 
   """
