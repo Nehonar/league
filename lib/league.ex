@@ -1,18 +1,21 @@
 defmodule League do
-  @moduledoc """
-  Documentation for League.
-  """
+  @moduledoc false
 
-  @doc """
-  Hello world.
+  use Application
 
-  ## Examples
+  alias Plug.Cowboy
+  alias League.Web.Router
 
-      iex> League.hello()
-      :world
+  def start(_type, _args) do
+    children = [
+      Cowboy.child_spec(
+        scheme: :http,
+        plug: Router,
+        options: [port: 4001]
+      )
+    ]
 
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: League.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end

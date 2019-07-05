@@ -1,57 +1,22 @@
-alias League.Web.Router
-
 defmodule LeagueTest do
   @moduledoc false
   use ExUnit.Case
   use Plug.Test
 
-  @opts Router.init([])
+  # All alias
+  alias League.Web.Controllers.PingController, as: PingController
 
-  test "greets the world" do
-    assert League.hello() == :world
+  test "Ping test" do
+    conn = conn(:get, "/ping")
+    resp = PingController.ping(conn)
+    
+    assert resp.resp_body == "Pong"
   end
 
-  test "returns hello world" do
-    # Create a test connection
-    conn = conn(:get, "/hello")
-
-    # Invoke the plug
-    conn = Router.call(conn, @opts)
-
-    # Assert the response and status
-    assert conn.state == :sent
-    assert conn.status == 200
-    assert conn.resp_body == "world"
-  end
-
-  test "returns some metrics" do
-    # Create a test connection
-    conn = conn(:get, "/metrics")
-
-    # Invoke the plug
-    conn = Router.call(conn, @opts)
-
-    # Assert the response and status
-    assert conn.state == :sent
-    assert conn.status == 200
-
-    # Assert contains at least 'http_requests_total' metric
-    assert String.contains?(conn.resp_body, "http_requests_total")
-  end
-
-  test "responds 404 to not found" do
-    # Create a test connection
-    conn = conn(:get, "/any")
-
-    # Invoke the plug
-    conn = Router.call(conn, @opts)
-
-    # Assert the response and status
-    assert conn.state == :sent
-    assert conn.status == 404
-  end
-
-  test "start code does not crash" do
-    {:error, {:already_started, _pid}} = League.Application.start(:normal, [])
+  test "flunk test" do
+    conn = conn(:get, "/flunk")
+    resp = PingController.flunk(conn)
+    
+    assert resp.resp_body == "Ooops... We have a several internal error!"
   end
 end
