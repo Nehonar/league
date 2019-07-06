@@ -33,9 +33,11 @@ defmodule League.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:plug_cowboy, "~> 2.0"},
-      {:plug, "~> 1.0"},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:credo,          "~> 1.0", only: [:dev, :test], runtime: false},
+      {:csv,            "~> 2.3"},
+      {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:plug_cowboy,    "~> 2.0"},
+      {:plug,           "~> 1.0"}
     ]
   end
 end

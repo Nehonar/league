@@ -36,3 +36,5 @@ if Mix.env == :dev do
       "credo --strict",
     ]
 end
+
+import_config "#{Mix.env()}.exs"

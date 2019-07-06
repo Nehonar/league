@@ -5,6 +5,7 @@ defmodule League do
 
   alias Plug.Cowboy
   alias League.Web.Router
+  alias League.Lib.ReadData
 
   def start(_type, _args) do
     children = [
@@ -14,6 +15,7 @@ defmodule League do
         options: [port: 4001]
       )
     ]
+    SaveData.init()
 
     opts = [strategy: :one_for_one, name: League.Supervisor]
     Supervisor.start_link(children, opts)
