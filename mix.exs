@@ -35,6 +35,7 @@ defmodule League.MixProject do
     [
       {:credo,          "~> 1.0", only: [:dev, :test], runtime: false},
       {:csv,            "~> 2.3"},
+      {:jason,          "~> 1.1.2"},
       {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
       {:plug_cowboy,    "~> 2.0"},
       {:plug,           "~> 1.0"}

@@ -3,7 +3,7 @@ defmodule LeagueTest.ReadCSV do
     use ExUnit.Case
     use Plug.Test
     # alias
-    alias League.Lib.SaveData
+    alias League.SaveData
 
     # test "Read headers" do
     #     headers = SaveData.get_headers_csv

@@ -5,7 +5,7 @@ defmodule League do
 
   alias Plug.Cowboy
   alias League.Web.Router
-  alias League.Lib.SaveData
+  alias League.SaveData
 
   def start(_type, _args) do
     children = [
