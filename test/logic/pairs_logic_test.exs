@@ -1,50 +1,17 @@
 defmodule LeagueTest.PairsLogicTest do
-  @moduledoc false
+  @moduledoc """
+  Check the logic to return the season and league pairs
+  """
   use ExUnit.Case
   use Plug.Test
 
-  alias League.PairsLogic.{State}
+  alias League.PairsLogic
 
   test "Get pairs" do
-      resp =
-          PairsLogic.get_data_ets(%State{ets_lookup: data_pairs()})
-      IO.inspect resp
+    resp = PairsLogic.init()
+    resp_valid = {"D1", ["201617"]}
+    [h | _t] = resp
 
-      assert true
-  end
-
-  def data_pairs do
-    [
-      {:key,
-       %{
-         "" => "1",
-         "AwayTeam" => "Eibar",
-         "Date" => "19/08/2015",
-         "Div" => "SP1",
-         "FTAG" => "1",
-         "FTHG" => "2",
-         "FTR" => "H",
-         "HTAG" => "0",
-         "HTHG" => "0",
-         "HTR" => "D",
-         "HomeTeam" => "La Coruna",
-         "Season" => "201617"
-       }},
-      {:key,
-       %{
-         "" => "2",
-         "AwayTeam" => "Eibar",
-         "Date" => "19/08/2016",
-         "Div" => "SP1",
-         "FTAG" => "1",
-         "FTHG" => "2",
-         "FTR" => "H",
-         "HTAG" => "0",
-         "HTHG" => "0",
-         "HTR" => "D",
-         "HomeTeam" => "La Coruna",
-         "Season" => "201516"
-       }}
-    ]
+    assert h == resp_valid
   end
 end

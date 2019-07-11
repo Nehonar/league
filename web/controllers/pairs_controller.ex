@@ -8,15 +8,12 @@ defmodule League.Web.Controllers.PairsController do
 
     defmodule State do
         @moduledoc """
-        State
+        CONN --> The connection
+        DATA --> List of pairs season and leagues
         """
         defstruct [
-            :all_data,
             :conn,
             :data,
-            :div_data,
-            :season_data,
-            :params
         ]
     end
 
@@ -26,6 +23,7 @@ defmodule League.Web.Controllers.PairsController do
         |> send_respond()
     end
 
+    # Send data to logic 
     def call_logic(%State{} = state) do
         data =
             PairsLogic.init
@@ -34,6 +32,7 @@ defmodule League.Web.Controllers.PairsController do
         %State{state | data: data}
     end
 
+    # Send the answer with data
     def send_respond(%State{conn: conn, data: data}) do
         conn
         |> put_resp_header("content-type", "application/json")

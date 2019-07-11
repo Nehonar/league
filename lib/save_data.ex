@@ -6,11 +6,15 @@ defmodule League.SaveData do
   require Logger
   alias League.Helpers.Ets
 
+  # ETS table name
   @name_ets :league
 
   defmodule State do
     @moduledoc """
-    Controls the structure of the parameters.
+    DATA_CSV      --> All CSV data.
+    FILE_EXIST    --> Just check if the CSV file exists.
+    MAP_DATA_LIST --> A map with the rows in list
+    NAME_ETS      --> Just a name of ETS table
     """
     defstruct [
       :data_csv,
@@ -22,7 +26,8 @@ defmodule League.SaveData do
 
   defmodule Error do
     @moduledoc """
-    Control the structure of the error
+    REASON  --> Reason of error
+    STATE   --> Complete state to see the possible failures
     """
     defstruct [
       :reason,
@@ -36,19 +41,21 @@ defmodule League.SaveData do
     Logger.info("Init extract data from CSV")
 
     %State{}
-    |> controller_file_csv()
+    |> check_file_csv()
     |> get_data_csv()
     |> mapping_data_csv()
     |> create_ets()
     |> save_data_ets()
   end
 
-  def controller_file_csv(%State{} = state) do
+  # Check if the CSV exists
+  def check_file_csv(%State{} = state) do
     file_exist = File.exists?(@path_file_csv)
 
     %State{state | file_exist: file_exist}
   end
 
+  # If the CSV exists, take data from csv
   def get_data_csv(%State{file_exist: true} = state) do
     Logger.info("Get data from CSV")
 
@@ -64,10 +71,12 @@ defmodule League.SaveData do
       %Error{reason: "Error decoding csv file", state: state}
   end
 
+  # If the CSV does not exist it will enter here
   def get_data_csv(%State{} = state) do
     %Error{reason: "No such file or directory", state: state}
   end
 
+  # Create a map from CSV data
   def mapping_data_csv(%State{data_csv: data_csv} = state) do
     Logger.info("Mapping data from csv")
 
@@ -87,6 +96,7 @@ defmodule League.SaveData do
 
   def mapping_data_csv(%Error{} = error), do: error
 
+  # Create ETS table
   def create_ets(%State{} = state) do
     name_ets = Ets.create_ets_table(@name_ets)
 
@@ -95,6 +105,7 @@ defmodule League.SaveData do
 
   def create_ets(%Error{} = error), do: error
 
+  # Save data from CSV to ETS
   def save_data_ets(%State{name_ets: name_ets, map_data_list: map_data_list}) do
     Logger.info("Insert data in table")
 

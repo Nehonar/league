@@ -12,21 +12,21 @@ defmodule League.Web.Controllers.SeasonLeagueController do
 
     defmodule State do
         @moduledoc """
-        state structure to handle 
-        the variables in a comfortable way
+        CONN            --> All info of connection
+        DATA            --> Data sent to logic
+        PARAMS          --> Params is div and season
         """
         defstruct [
             :conn,
             :data,
-            :div_data,
-            :season_data,
             :params
         ]
     end
 
     defmodule Error do
         @moduledoc """
-        Error structure to handle errors and reaosns
+        REASON  --> Reason of error
+        STATE   --> Complete state to see the possible failures
         """
         defstruct [
             :reason,
@@ -42,6 +42,7 @@ defmodule League.Web.Controllers.SeasonLeagueController do
         |> send_respond()
     end
 
+    # Take the params of the connection
     def get_params(%State{conn: conn} = state) do
         params =
             conn.query_string
@@ -49,6 +50,7 @@ defmodule League.Web.Controllers.SeasonLeagueController do
         %State{state | params: params}
     end
 
+    # Check that the params exist
     def validate_params(%State{params: params} = state) do
         case params do
             %{"div" => _, "season" => _} ->
@@ -58,22 +60,23 @@ defmodule League.Web.Controllers.SeasonLeagueController do
         end
     end
 
+    # Send data to the logic module
     def send_data_logic(%State{params: params} = state) do
-        case SeasonLeagueLogic.init(params) do
-            {:ok, data} ->
-                %State{state | data: data}
-            {:error, reason} ->
-                %Error{reason: reason, state: state}
-        end
+        {:ok, data} =
+            SeasonLeagueLogic.init(params)
+        
+        %State{state | data: data}
     end
     def send_data_logic(%Error{} = error), do: error
 
+    # If everything goes well we send the answer with 200
     def send_respond(%State{conn: conn, data: data}) do
         conn
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(data))
 
     end
+    # If something has gone wrong, we send the reason and show the state
     def send_respond(%Error{reason: reason, state: state}) do
         Logger.error "#{inspect state}"
         state.conn

@@ -16,6 +16,7 @@ defmodule League do
       )
     ]
 
+    # Read CSV, Create table ETS and insert data
     SaveData.init()
 
     opts = [strategy: :one_for_one, name: League.Supervisor]

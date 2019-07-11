@@ -40,6 +40,9 @@ but not I had time and I left the code like that.
 - The api is divided into two endpoints, I have to think about a possible frontend, 
 it is interesting that they can choose the list of divisions, 
 to be able to offer the user a list.
+- I have also included an api that returns the version of the project 
+linked to the last commit of github.
+- Another basic is the ping, to know if the app is up.
 
 # Routes
 - /available_pairs
@@ -88,6 +91,16 @@ to be able to offer the user a list.
         "Season": "201516"
         }
     ]
+    ```
+- /version
+    - Returns version of the project.
+    ```
+    0.1.0+a1a1a1a
+    ```
+- /ping
+    - If returns "pong", it means that the app is working.
+    ```
+    Pong
     ```
 
 

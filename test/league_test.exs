@@ -1,5 +1,7 @@
 defmodule LeagueTest do
-  @moduledoc false
+  @moduledoc """
+  Check controller ping and flunk
+  """
   use ExUnit.Case
   use Plug.Test
 

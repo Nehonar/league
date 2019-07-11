@@ -1,51 +1,17 @@
 defmodule LeagueTest.SeasonLeagueLogicTest do
-  @moduledoc false
+  @moduledoc """
+  Check all logic to season and leagues
+  """
   use ExUnit.Case
   use Plug.Test
 
   alias League.SeasonLeagueLogic
 
-  test "Get pairs" do
+  test "Get Seasons and leagues" do
     params = %{"div" => "SP1", "season" => "201617"}
-    resp = SeasonLeagueLogic.init(params)
+    {:ok, resp} = SeasonLeagueLogic.init(params)
+    [h | _t] = resp
 
-    # IO.inspect resp.resp_body
-    # h["Season"] == "201617"
-    assert true
-  end
-
-  def data_pairs do
-    [
-      {:key,
-       %{
-         "" => "1",
-         "AwayTeam" => "Eibar",
-         "Date" => "19/08/2015",
-         "Div" => "SP1",
-         "FTAG" => "1",
-         "FTHG" => "2",
-         "FTR" => "H",
-         "HTAG" => "0",
-         "HTHG" => "0",
-         "HTR" => "D",
-         "HomeTeam" => "La Coruna",
-         "Season" => "201617"
-       }},
-      {:key,
-       %{
-         "" => "2",
-         "AwayTeam" => "Eibar",
-         "Date" => "19/08/2016",
-         "Div" => "SP1",
-         "FTAG" => "1",
-         "FTHG" => "2",
-         "FTR" => "H",
-         "HTAG" => "0",
-         "HTHG" => "0",
-         "HTR" => "D",
-         "HomeTeam" => "La Coruna",
-         "Season" => "201516"
-       }}
-    ]
+    assert h["AwayTeam"] == "Leganes"
   end
 end

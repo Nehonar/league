@@ -5,9 +5,9 @@ defmodule League.Web.Controllers.VersionController do
   """
   import Plug.Conn
 
-  @spec run(%Plug.Conn{}) :: %Plug.Conn{}
+  @spec init(%Plug.Conn{}) :: %Plug.Conn{}
 
-  def run(conn) do
+  def init(conn) do
     conn
     |> put_resp_header("content-type", "text/plain")
     |> send_resp(200, get_commit_version())

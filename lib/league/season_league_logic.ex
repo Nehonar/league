@@ -1,6 +1,7 @@
 defmodule League.SeasonLeagueLogic do
   @moduledoc """
-  Season and League Logic
+  Here we have the logic of how the table recovers ETS 
+  and inside it creates a list with the desired league and season.
   """
 
   alias League.Helpers.Ets
@@ -9,7 +10,9 @@ defmodule League.SeasonLeagueLogic do
 
   defmodule State do
     @moduledoc """
-    state
+    ALL_DATA  --> Literally all the data.
+    DATA      --> Filtered data to return a list with a league and season.
+    PARAMS    --> Season and div stablished.
     """
     defstruct [
       :all_data,
@@ -25,12 +28,14 @@ defmodule League.SeasonLeagueLogic do
     |> return_data()
   end
 
+  # Take data from the default ETS of the tabla that @ets_table
   def get_data_ets(%State{} = state) do
     all_data = Ets.lookup_all(@ets_table)
 
     %State{state | all_data: all_data}
   end
 
+  # Filter data to return a list with the established parameters
   def get_data_filtered(%State{all_data: all_data, params: params} = state) do
     data =
       all_data
@@ -42,10 +47,12 @@ defmodule League.SeasonLeagueLogic do
     %State{state | data: data}
   end
 
+  # Extracted function so do not force too much get_data_filteres
   defp filter(params, div, season) do
     div == params["div"] and season == params["season"]
   end
 
+  # Return tuple with atom ok and data
   def return_data(%State{data: data}) do
     {:ok, data}
   end
