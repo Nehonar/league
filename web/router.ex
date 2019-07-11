@@ -18,7 +18,7 @@ defmodule League.Web.Router do
   get "/ping",            do: PingController.ping(conn)
   get "/flunk",           do: PingController.flunk(conn)
   get "/available_pairs", do: PairsController.init(conn)
-  get "/league",          do: SeasonLeagueController.init(conn)
+  get "/leagues",          do: SeasonLeagueController.init(conn)
 
   match _ do
     send_resp(conn, 404, "Ooops.. This not exist")
