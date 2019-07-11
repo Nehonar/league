@@ -1,47 +1,42 @@
 defmodule League.Web.Controllers.PairsController do
     @moduledoc """
-    Controller pairs
+    Returns optional pairs
     """
     import Plug.Conn
 
-    alias League.Helpers.Ets
     alias League.PairsLogic
 
-    @ets_table :league
-
     defmodule State do
+        @moduledoc """
+        State
+        """
         defstruct [
+            :all_data,
             :conn,
             :data,
-            :data_pairs
+            :div_data,
+            :season_data,
+            :params
         ]
     end
 
     def init(conn) do
         %State{conn: conn}
-        |> search_pairs()
-        |> logic_pairs()
-        |> response()
+        |> call_logic()
+        |> send_respond()
     end
 
-    def search_pairs(%State{conn: conn} = state) do
-        data_pairs = 
-            Ets.lookup_all(@ets_table)
-
-        %State{state | conn: conn, data_pairs: data_pairs}
-    end
-
-    def logic_pairs(%State{data_pairs: data_pairs} = state) do
+    def call_logic(%State{} = state) do
         data = 
-            PairsLogic.init(data_pairs)
-        
+            Enum.into(PairsLogic.init(), %{})
+
         %State{state | data: data}
     end
 
-    def response(%State{conn: conn, data: data}) do
-        IO.inspect data
+    def send_respond(%State{conn: conn, data: data}) do
         conn
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(data))
     end
+    
 end

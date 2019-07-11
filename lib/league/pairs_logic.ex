@@ -1,34 +1,53 @@
 defmodule League.PairsLogic do
     @moduledoc """
-    Pairs Logic
+    Season and League Logic
     """ 
+
+    alias League.Helpers.Ets
+    
+    @ets_table :league
+
     defmodule State do
+        @moduledoc """
+        state
+        """
         defstruct [
-            :data_list,
-            :data_pairs
+            :all_data,
+            :data,
+            ets_lookup: &Ets.lookup_all/1
         ]
     end
 
-    def init(data_pairs) do
-        %State{data_pairs: data_pairs}
-        |> list_data()
-        |> select_unique_pairs()
+    def init() do
+        %State{}
+        |> get_data_ets()
+        |> list_seasons_with_leagues()
+        |> return_data()
     end
 
-    def list_data(%State{data_pairs: data_pairs} = state) do
-        data_list = 
-            Enum.reduce(data_pairs, fn {_key, data}, acc -> 
-                [data | acc]
-            end)
+    def get_data_ets(%State{ets_lookup: ets_lookup} = state) do
+        all_data =
+            ets_lookup.(@ets_table)
         
-        %State{state | data_list: data_list}
+        %State{state | all_data: all_data}
     end
 
-    def select_unique_pairs(%State{data_list: data_list} = state) do
-        unique_pairs = 
-            Enum.uniq_by(data_list, fn %{"Div" => div, "Season" => season}, acc -> 
-                [%{div, season} | acc]
+    def list_seasons_with_leagues(%State{all_data: all_data} = state) do
+        data = 
+            Enum.reduce(all_data, %{}, fn {_key, %{"Div" => div, "Season" => season}}, acc ->
+                if Map.has_key?(acc, div) do
+                  old_season = Map.get(acc, div)
+                  Map.put(acc, div, old_season ++ [season])
+                else
+                  Map.put_new(acc, div, [season])
+                end
             end)
-        IO.inspect unique_pairs
+            |> Enum.map(fn {div, season} -> {div, Enum.uniq(season)} end)
+
+        %State{state | data: data}
+    end
+
+    def return_data(%State{data: data}) do
+        data
     end
 end

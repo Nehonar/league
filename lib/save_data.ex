@@ -1,6 +1,7 @@
 defmodule League.SaveData do
     @moduledoc """
-    This module read data
+    This module will be responsible for reading the csv 
+    and saving it in an ETS table when the app is started.
     """
     require Logger
     alias League.Helpers.Ets
@@ -8,6 +9,9 @@ defmodule League.SaveData do
     @name_ets :league
 
     defmodule State do
+        @moduledoc """
+        Controls the structure of the parameters.
+        """
         defstruct [
             :data_csv,
             :file_exist,
@@ -17,6 +21,9 @@ defmodule League.SaveData do
     end
 
     defmodule Error do
+        @moduledoc """
+        Control the structure of the error
+        """
         defstruct [
             :reason,
             :state
@@ -74,6 +81,7 @@ defmodule League.SaveData do
                         :error
                 end
             end)
+            
         %State{state | map_data_list: map_data_list}
     end
     def mapping_data_csv(%Error{} = error), do: error
@@ -81,7 +89,7 @@ defmodule League.SaveData do
     def create_ets(%State{} = state) do
         name_ets = 
             Ets.create_ets_table(@name_ets)
-        IO.puts "NAME ETS :: #{inspect name_ets}"
+            
         %State{state | name_ets: name_ets}
     end
     def create_ets(%Error{} = error), do: error
@@ -93,5 +101,7 @@ defmodule League.SaveData do
             Ets.insert_data(name_ets, {row[""], row})
         end)
     end
-    def save_data_ets(%Error{} = error), do: error
+    def save_data_ets(%Error{reason: reason}) do
+        Logger.error reason
+    end
 end
