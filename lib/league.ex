@@ -3,9 +3,9 @@ defmodule League do
 
   use Application
 
-  alias Plug.Cowboy
-  alias League.Web.Router
   alias League.SaveData
+  alias League.Web.Router
+  alias Plug.Cowboy
 
   def start(_type, _args) do
     children = [
@@ -15,7 +15,7 @@ defmodule League do
         options: [port: 4001]
       )
     ]
-    
+
     SaveData.init()
 
     opts = [strategy: :one_for_one, name: League.Supervisor]

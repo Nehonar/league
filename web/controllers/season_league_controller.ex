@@ -31,7 +31,7 @@ defmodule League.Web.Controllers.SeasonLeagueController do
         defstruct [
             :reason,
             :state
-        ]    
+        ]
     end
 
     def init(conn) do
@@ -43,9 +43,9 @@ defmodule League.Web.Controllers.SeasonLeagueController do
     end
 
     def get_params(%State{conn: conn} = state) do
-        params = 
-            URI.decode_query(conn.query_string)
-        
+        params =
+            conn.query_string
+            |> URI.decode_query()
         %State{state | params: params}
     end
 
@@ -56,7 +56,6 @@ defmodule League.Web.Controllers.SeasonLeagueController do
             _ ->
                 %Error{reason: "Parameters are wrong", state: state}
         end
-        
     end
 
     def send_data_logic(%State{params: params} = state) do

@@ -6,7 +6,7 @@ defmodule League.MixProject do
       app: :league,
       version: "0.1.0",
       elixir: "~> 1.9",
-      elixirc_paths: elixirc_paths(Mix.env),
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
@@ -28,18 +28,18 @@ defmodule League.MixProject do
   end
 
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
-  defp elixirc_paths(_),     do: ["lib", "web"]
+  defp elixirc_paths(_), do: ["lib", "web"]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:credo,          "~> 1.0", only: [:dev, :test], runtime: false},
-      {:csv,            "~> 2.3"},
-      {:excoveralls,    "~> 0.11.1", only: :test},
-      {:jason,          "~> 1.1.2"},
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:csv, "~> 2.3"},
+      {:excoveralls, "~> 0.11.1", only: :test},
+      {:jason, "~> 1.1.2"},
       {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:plug_cowboy,    "~> 2.0"},
-      {:plug,           "~> 1.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:plug, "~> 1.0"}
     ]
   end
 end

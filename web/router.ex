@@ -3,12 +3,12 @@ defmodule League.Web.Router do
   Routes for different requirements
   """
 
-  use Plug.Router
   alias League.Web.Controllers.{
-    PingController, 
-    SeasonLeagueController, 
-    PairsController
+    PairsController,
+    PingController,
+    SeasonLeagueController
   }
+  use Plug.Router
   # Use plug logger for logging request information
   plug(Plug.Logger)
 

@@ -27,8 +27,9 @@ defmodule League.Web.Controllers.PairsController do
     end
 
     def call_logic(%State{} = state) do
-        data = 
-            Enum.into(PairsLogic.init(), %{})
+        data =
+            PairsLogic.init
+            |> Enum.into(%{})
 
         %State{state | data: data}
     end
@@ -38,5 +39,4 @@ defmodule League.Web.Controllers.PairsController do
         |> put_resp_header("content-type", "application/json")
         |> send_resp(200, Jason.encode!(data))
     end
-    
 end
