@@ -24,10 +24,24 @@ and the functions that do not.
 - mix deps.get
 - iex -S mix
 
+# When the app starts, it reads the csv and stores the data in ets tables, 
+# the reading of the data is faster and you only have to read the csv once.
+
+- I chose to save the data in ets, because of the speed of reading and writing it offers, 
+in the end it occurred to me that I could save individual tables by divisions, 
+and thus the reading of a season and division pair would be more optimal, 
+but not I had time and I left the code like that.
+
+
 # The system starts up on: 
 - localhost:4001/
 
-# API routes:
+# API 
+- The api is divided into two endpoints, I have to think about a possible frontend, 
+it is interesting that they can choose the list of divisions, 
+to be able to offer the user a list.
+
+# Routes
 - /available_pairs
     - This route offers a list of divisions with their available seasons.
     - Here is an example of how data returns.
@@ -57,7 +71,7 @@ and the functions that do not.
     - Here is an example of how data returns.
     ```
     localhost:4001/leagues?div=SP1&season=201516
-    
+
     [
         {
         "": "465",
