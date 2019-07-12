@@ -22,7 +22,8 @@ RUN mkdir project/ \
     && mix local.hex --force \
     && mix local.rebar --force \
     && mix deps.get \
-    && mix compile 
+    && mix compile \
+	&& cd /root
 
 EXPOSE 4001
 
