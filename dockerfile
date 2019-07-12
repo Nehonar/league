@@ -22,4 +22,4 @@ RUN set -xe \
     && mix deps.get \
     && mix compile \
     && iex -S mix
-CMD ["iex -S mix"]
+CMD ["iex"]
