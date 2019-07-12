@@ -37,6 +37,7 @@ defmodule League.MixProject do
       {:excoveralls, "~> 0.11.1", only: :test},
       {:jason, "~> 1.1.2"},
       {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:mix_docker, "~> 0.2.2"},
       {:plug_cowboy, "~> 2.0"},
       {:plug, "~> 1.0"}
     ]
