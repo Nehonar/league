@@ -20,6 +20,6 @@ RUN set -xe \
     && mix local.hex --force \
     && mix local.rebar --force \
     && mix deps.get \
-    && mix compile \
-    && iex -S mix
-CMD ["iex"]
+    && mix compile \ 
+	&& iex -S mix
+CMD ["/bin/bash"]

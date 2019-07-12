@@ -37,6 +37,6 @@ if Mix.env() == :dev do
     ]
 end
 
-config :mix_docker, image: "nehonar/derivco_league"
+config :mix_docker, image: "-t nehonar/derivco_league:latest"
 
 import_config "#{Mix.env()}.exs"
