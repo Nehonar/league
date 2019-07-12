@@ -24,8 +24,11 @@ and the functions that do not.
 - mix deps.get
 - iex -S mix
 
-# When the app starts, it reads the csv and stores the data in ets tables, 
-# the reading of the data is faster and you only have to read the csv once.
+# To start with docker:
+- sudo docker login
+- sudo docker build -t "nehonar/derivco_league" .
+
+# When the app starts, it reads the csv and stores the data in ets tables, the reading of the data is faster and you only have to read the csv once.
 
 - I chose to save the data in ets, because of the speed of reading and writing it offers, 
 in the end it occurred to me that I could save individual tables by divisions, 

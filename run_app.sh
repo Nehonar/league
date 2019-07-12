@@ -1,0 +1,1 @@
+exec iex -S mix

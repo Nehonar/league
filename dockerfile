@@ -21,5 +21,8 @@ RUN set -xe \
     && mix local.rebar --force \
     && mix deps.get \
     && mix compile \ 
-	&& iex -S mix
+	&& ./run_app.sh
+
+EXPOSE 4001
+
 CMD ["/bin/bash"]
