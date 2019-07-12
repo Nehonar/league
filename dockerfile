@@ -13,16 +13,17 @@ RUN set -xe \
 	&& tar -xzC /usr/local/src/elixir --strip-components=1 -f elixir-src.tar.gz \
 	&& rm elixir-src.tar.gz \
 	&& cd /usr/local/src/elixir \
-	&& make install clean \
-    && cd \
+	&& make install clean 
+
+RUN mkdir project/ \
+    && cd project \
     && git clone https://github.com/Nehonar/league.git \
     && cd league \
     && mix local.hex --force \
     && mix local.rebar --force \
     && mix deps.get \
-    && mix compile \ 
-	&& ./run_app.sh
+    && mix compile 
 
 EXPOSE 4001
 
-CMD ["/bin/bash"]
+CMD ["/project/league/run_app.sh"]
